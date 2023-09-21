@@ -1,8 +1,10 @@
 using DiApi.Data;
+using DiApi.DataServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddScoped<IDataRepo, SqlDataRepo>();
+builder.Services.AddScoped<IDataRepo, NoSqlDataRepo>();
+builder.Services.AddScoped<IDataService, HttpDataService>();
 
 var app = builder.Build();
 
@@ -10,7 +12,6 @@ app.UseHttpsRedirection();
 
 app.MapGet("/data", (IDataRepo repo) =>
 {
-    // var repo = new SqlDataRepo();
     repo.ReturnData();
     return Results.Ok();
 });
