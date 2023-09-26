@@ -4,19 +4,30 @@ namespace DiApi.Data
 {
   public class NoSqlDataRepo : IDataRepo
   {
-    private readonly IDataService _dataService;
+    private readonly IServiceScopeFactory _scopeFactory;
 
-    public NoSqlDataRepo(IDataService dataService)
+    // private readonly IDataService _dataService;
+
+    public NoSqlDataRepo(IServiceScopeFactory serviceScopeFactory)
     {
-      _dataService = dataService;
+      //_dataService = dataService;
+      _scopeFactory = serviceScopeFactory;
     }
     public string GetData()
     {
       Console.ForegroundColor = ConsoleColor.Red;
       Console.WriteLine("Returning data from NoSqlDataRepo");
-      Console.ResetColor();
-      _dataService.GetProductData("https://something.com/api");
-      return "SQL Data from NoSqlDataRepo";
+
+
+      using (var scope = _scopeFactory.CreateScope())
+      {
+        var dataService = scope.ServiceProvider.GetRequiredService<IDataService>();
+        dataService.GetProductData("https://something.com/api");
+        Console.ResetColor();
+        return "SQL Data from NoSqlDataRepo";
+      }
+
+
     }
 
     public string ReturnData()

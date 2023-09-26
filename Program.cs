@@ -13,7 +13,7 @@ app.UseHttpsRedirection();
 app.MapGet("/data", (IDataRepo repo) =>
 {
     repo.ReturnData();
-    return Results.Ok();
+    return Results.Ok("Hello World!");
 });
 
 app.Run();

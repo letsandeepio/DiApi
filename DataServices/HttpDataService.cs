@@ -4,7 +4,9 @@ namespace DiApi.DataServices
   {
     public string GetProductData(string url)
     {
+      Console.ForegroundColor = ConsoleColor.Yellow;
       Console.WriteLine("----> Getting Product data...");
+      Console.ResetColor();
       return "some product data";
     }
   }
